@@ -20,7 +20,7 @@ router = APIRouter(prefix="/api/v1", tags=["Forecast Layers"])
     description="Returns spatial grid containing lead time, latitude, longitude, bust probability, confidence score, and expected error.",
 )
 def get_confidence_map(
-    lead_time_hours: int = Query(24, ge=24, le=120, description="Lead time in hours (24, 48, 72, 96, 120)"),
+    lead_time_hours: int = Query(24, ge=24, le=240, description="Lead time in hours (24h to 240h)"),
     stride: int = Query(4, ge=1, le=16, description="Grid spatial subsampling stride"),
     model_type: str = Query("xgboost", description="Model selection: 'xgboost' or 'cnn'"),
     model_svc: ModelService = Depends(get_model_service),
@@ -42,7 +42,7 @@ def get_confidence_map(
     description="Returns spatial GFS precipitation forecast values across India region.",
 )
 def get_forecast_layer(
-    lead_time_hours: int = Query(24, ge=24, le=120, description="Lead time in hours (24, 48, 72, 96, 120)"),
+    lead_time_hours: int = Query(24, ge=24, le=240, description="Lead time in hours (24h to 240h)"),
     stride: int = Query(4, ge=1, le=16, description="Grid spatial subsampling stride"),
     fcst_svc: ForecastService = Depends(get_forecast_service),
 ) -> ForecastMapResponse:
