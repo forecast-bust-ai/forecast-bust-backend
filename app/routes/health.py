@@ -11,7 +11,9 @@ router = APIRouter(tags=["Health"])
 
 
 @router.get("/health", summary="System Health Check")
+@router.get("/HEALTH", include_in_schema=False)
 @router.get("/api/v1/health", summary="System Health Check v1")
+@router.get("/api/v1/HEALTH", include_in_schema=False)
 def health_check(model_svc: ModelService = Depends(get_model_service)):
     """Check API status and model readiness."""
     model_loaded = hasattr(model_svc, "model") and model_svc.model.is_trained

@@ -2,7 +2,7 @@
 FastAPI Main Application Entry Point.
 Configures CORS, routes, middleware, and startup verification.
 """
-
+# FastAPI Application Entry Point (reloaded)
 import sys
 from pathlib import Path
 from fastapi import FastAPI
@@ -16,12 +16,12 @@ sys.path.insert(0, str(BACKEND_DIR))
 sys.path.insert(0, str(PROJECT_ROOT / "models" / "baseline"))
 
 from app.config import APP_NAME, APP_VERSION, CORS_ORIGINS
-from app.routes import health, predict, forecast, explanation
+from app.routes import health, predict, forecast, explanation, forecast_explorer
 
 app = FastAPI(
     title=APP_NAME,
     version=APP_VERSION,
-    description="AI-Based Forecast Bust Detection REST API for NCMRWF / MoES",
+    description="Regime-Aware AI Post-Processing & Forecast Explorer REST API for NCMRWF / MoES",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -40,6 +40,8 @@ app.include_router(health.router)
 app.include_router(predict.router)
 app.include_router(forecast.router)
 app.include_router(explanation.router)
+app.include_router(forecast_explorer.router)
+
 
 
 @app.get("/", include_in_schema=False)
